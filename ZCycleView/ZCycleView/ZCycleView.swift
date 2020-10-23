@@ -16,6 +16,7 @@ import UIKit
     @objc optional func cycleViewConfigureDefaultCellText(_ cycleView: ZCycleView, titleLabel: UILabel, index: Int)
     /// 滚动到第index个cell
     @objc optional func cycleViewDidScrollToIndex(_ cycleView: ZCycleView, index: Int)
+    @objc optional func cycleViewDidScroll(_ cycleView: ZCycleView, scrollView: UIScrollView)
     /// 点击了第index个cell
     @objc optional func cycleViewDidSelectedIndex(_ cycleView: ZCycleView, index: Int)
     /// pageControl设置
@@ -312,6 +313,8 @@ extension ZCycleView {
     
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl?.currentPage = currentIndex() % realDataCount
+        guard let delegate = self.delegate else { return }
+        delegate.cycleViewDidScroll?(self, scrollView: scrollView)
     }
 }
 
